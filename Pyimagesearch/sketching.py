@@ -11,13 +11,15 @@ ap = argparse.ArgumentParser()
 # ap.add_argument("-v", "--video", required=True, help="path to input video file")
 #ap.add_argument("-o", "--output", required=True, help="path to output png")
 args = vars(ap.parse_args())
-try:
-    # cap = VideoStream(src=0).start()
-    cap = cv2.VideoCapture(0)
+# try:
+#     # cap = VideoStream(src=0).start()
+#     cap = cv2.VideoCapture(0)
 
-    pass
-except:
-    cap = cv2.VideoCapture(0)
+#     pass
+# except:
+cap = cv2.VideoCapture(0)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 640)
 
 blackLower = (0, 0, 0)
 blackUpper = (150, 150, 150)
@@ -49,8 +51,8 @@ while 0:
     if key == ord("q"):
         break
     # time.sleep(1)
-resf = cv2.imread('painting4.jpg',0)  # get the frame
-print(resf)
+# resf = cv2.imread('painting4.jpg',0)  # get the frame
+# print(resf)
 resf = cv2.cvtColor(resf, cv2.COLOR_GRAY2BGR)
 cv2.imshow('RGB',resf)
 cv2.imwrite('sketch.jpg', resf)

@@ -25,13 +25,14 @@ from keras.applications.vgg16 import VGG16
 
 from scipy.optimize import fmin_l_bfgs_b
 from scipy.misc import imsave
+import postimg 
 
 """## Load and preprocess the content and style images
 
 Our first task is to load the content and style images. Note that the content image we're working with is not particularly high quality, but the output we'll arrive at the end of this process still looks really good.
 """
 
-height = 640
+height = 480
 width = 480
 
 content_image_path = 'sketch.jpg'
@@ -246,32 +247,33 @@ evaluator = Evaluator()
 We stop after 10 iterations because the output looks good to me and the loss stops reducing significantly.
 """
 
-x = np.random.uniform(0, 255, (1, height, width, 3)) - 128.
+# x = np.random.uniform(0, 255, (1, height, width, 3)) - 128.
 
-iterations = 100
+# iterations = 1
 
-for i in range(iterations):
-    print('Start of iteration', i)
-    start_time = time.time()
-    x, min_val, info = fmin_l_bfgs_b(evaluator.loss, x.flatten(),
-                                     fprime=evaluator.grads, maxfun=20)
-    print('Current loss value:', min_val)
-    end_time = time.time()
-    print('Iteration %d completed in %ds' % (i, end_time - start_time))
+# for i in range(iterations):
+#     print('Start of iteration', i)
+#     start_time = time.time()
+#     x, min_val, info = fmin_l_bfgs_b(evaluator.loss, x.flatten(),
+#                                      fprime=evaluator.grads, maxfun=20)
+#     print('Current loss value:', min_val)
+#     end_time = time.time()
+#     print('Iteration %d completed in %ds' % (i, end_time - start_time))
 
 """This took a while on my piddly laptop (that isn't GPU-accelerated), but here is the beautiful output from the last iteration! (Notice that we need to subject our output image to the inverse of the transformation we did to our input images before it makes sense.)"""
 
-x = x.reshape((height, width, 3))
-x = x[:, :, ::-1]
-x[:, :, 0] += 103.939
-x[:, :, 1] += 116.779
-x[:, :, 2] += 123.68
-x = np.clip(x, 0, 255).astype('uint8')
+# x = x.reshape((height, width, 3))
+# x = x[:, :, ::-1]
+# x[:, :, 0] += 103.939
+# x[:, :, 1] += 116.779
+# x[:, :, 2] += 123.68
+# x = np.clip(x, 0, 255).astype('uint8')
 
-Image.fromarray(x)
+# img = Image.fromarray(x)
 
-Image.fromarray(x)
+# img.save('artwork.jpg')
 
+postimg.photo_send('artwork.jpg')
 """## Conclusion and further improvements
 
 It's now your turn to play! Try changing the input images, their sizes, the weights of the different loss functions, the features used to construct them and enjoy different sorts of output. If you end up creating something you truly wish to share, [please do so](https://twitter.com/copingbear)!

@@ -10,14 +10,15 @@ ap = argparse.ArgumentParser()
 # ap.add_argument("-v", "--video", required=True, help="path to input video file")
 #ap.add_argument("-o", "--output", required=True, help="path to output png")
 args = vars(ap.parse_args())
-try:
-    # cap = VideoStream(src=0).start()
-    cap = cv2.VideoCapture(0)
+# try:
+#     # cap = VideoStream(src=0).start()
+#     cap = cv2.VideoCapture(0)
 
-    pass
-except:
-    cap = cv2.VideoCapture(0)
-
+#     pass
+# except:
+cap = cv2.VideoCapture(0)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 640)
 
 redLower = (0, 200, 50)
 redUpper = (50, 255, 255)
